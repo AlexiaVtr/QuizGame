@@ -28,6 +28,7 @@ var spanishquizCmd = &cobra.Command{
 
 		userScore := startGame()
 		compareUserPerformance(userScore)
+		newGCache().update(userScore, cacheTTL)
 
 	},
 }

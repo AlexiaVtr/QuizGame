@@ -7,7 +7,7 @@ import (
 	"github.com/bluele/gcache"
 )
 
-type gCache struct {
+type GCache struct {
 	scores gcache.Cache
 }
 
@@ -16,17 +16,17 @@ const (
 	cacheTTL  = 1 * time.Hour // default expiration
 )
 
-func newGCache() *gCache {
-	return &gCache{
+func newGCache() *GCache {
+	return &GCache{
 		scores: gcache.New(cacheSize).Expiration(cacheTTL).ARC().Build(),
 	}
 }
 
-func (gc *gCache) update(score int, expireIn time.Duration) error {
+func (gc *GCache) update(score int, expireIn time.Duration) error {
 	return gc.scores.SetWithExpire("quizzer", score, expireIn)
 }
 
-func (gc *gCache) read(gs GameScore) error {
+func (gc *GCache) read(gs GameScore) error {
 	var err error
 	scores := gc.scores.GetALL(true)
 
@@ -41,6 +41,6 @@ func (gc *gCache) read(gs GameScore) error {
 	return nil
 }
 
-func (gc *gCache) delete() {
+func (gc *GCache) delete() {
 	gc.scores.Remove("quizzer")
 }
