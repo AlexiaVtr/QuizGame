@@ -161,9 +161,9 @@ Your results are:
 	}
 
 	fmt.Printf(`
-	.
-	.
-	.
+.
+.
+.
 
 Your total score is: %d
 	`, up.score)

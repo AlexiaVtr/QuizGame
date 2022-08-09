@@ -12,11 +12,11 @@ var (
 
 	spanishquizCmd = &cobra.Command{
 		Use:   "spanishquiz",
-		Short: "Spanish quiz.",
+		Short: "Spanish quiz",
 		Long: `
 	///////////////////////////////////////////////////////////////////////////////	
 	
-	This application is a quiz to measure your knowledge in Spanish. The rules are:
+	This is a quiz to measure your knowledge in Spanish. The rules are:
 	
 	* There are 5 questions.
 	* You have 3 options for each question.
