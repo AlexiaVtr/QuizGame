@@ -24,3 +24,18 @@ func TestCalculateUserAverage(t *testing.T) {
 	}
 
 }
+
+func TestCompareUserPerformance(t *testing.T) {
+	userScore := 1
+	scores := make([]int, 3, 3)
+	scores = append(scores, 5, 5, 4)
+	response := "Your score is below average, try again!"
+
+	result := CompareUserPerformance(userScore, scores)
+	if result != response {
+
+		t.Errorf("CalculateUserAverage() FAILED. Expected %s, got %s", response, result)
+	} else {
+		t.Logf("CalculateUserAverage() PASSED. Expected %s, got %s", response, result)
+	}
+}

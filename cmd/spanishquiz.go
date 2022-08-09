@@ -1,16 +1,20 @@
-/*
-Alexia Vetere
-*/
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
-var spanishquizCmd = &cobra.Command{
-	Use:   "spanishquiz",
-	Short: "Spanish quiz.",
-	Long: `
+var (
+	user                    string
+	userScore               int
+	quizzersLimitPerSession = 5
+
+	spanishquizCmd = &cobra.Command{
+		Use:   "spanishquiz",
+		Short: "Spanish quiz.",
+		Long: `
 	///////////////////////////////////////////////////////////////////////////////	
 	
 	This application is a quiz to measure your knowledge in Spanish. The rules are:
@@ -24,14 +28,19 @@ var spanishquizCmd = &cobra.Command{
 	
 	///////////////////////////////////////////////////////////////////////////////
 	`,
-	Run: func(cmd *cobra.Command, args []string) {
+		Run: func(cmd *cobra.Command, args []string) {
 
-		userScore := startGame()
-		compareUserPerformance(userScore)
-		newGCache().update(userScore, cacheTTL)
+			for i := 0; i < quizzersLimitPerSession; i++ {
 
-	},
-}
+				userScore = StartGame()
+				fmt.Println(CompareUserPerformance(userScore, GameScores.scores))
+				GameScores.scores = append(GameScores.scores, userScore)
+
+			}
+
+		},
+	}
+)
 
 func init() {
 	rootCmd.AddCommand(spanishquizCmd)

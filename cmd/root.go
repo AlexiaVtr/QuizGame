@@ -6,10 +6,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var rootCmd = &cobra.Command{
-	Use:   "go_quiz",
-	Short: "Question and answer game.",
-	Long: `
+var (
+	cacheKeys = cache.Keys()
+	rootCmd   = &cobra.Command{
+		Use:   "go_quiz",
+		Short: "Question and answer game.",
+		Long: `
 	/////////////////////////////////////////////////////////////////
 
 	This is a question and answer game.
@@ -17,7 +19,8 @@ var rootCmd = &cobra.Command{
 	
 	/////////////////////////////////////////////////////////////////
 	`,
-}
+	}
+)
 
 func Execute() {
 	err := rootCmd.Execute()
@@ -27,5 +30,6 @@ func Execute() {
 }
 
 func init() {
+
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

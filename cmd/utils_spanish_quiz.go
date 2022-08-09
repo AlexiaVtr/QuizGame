@@ -3,7 +3,6 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"strings"
 )
 
 var (
@@ -165,7 +164,7 @@ Your total score is: %d
 }
 
 // Start the game and return the score of the quizer:
-func startGame() int {
+func StartGame() int {
 	fmt.Println("...")
 
 	quizerPerformance, err := QuestionIteration(&Questions)
@@ -180,50 +179,20 @@ func startGame() int {
 }
 
 // Compare the result of the user with to the players and print the percentile of that:
-func compareUserPerformance(userScore int) {
-	var userResponse string
+func CompareUserPerformance(userScore int, scores []int) string {
 
-	fmt.Println("Do you want to compare your score with other players?\n Y/N")
+	if userScore == 0 {
+		return "Your score is below average, try again!"
 
-	_, err := fmt.Scan(&userResponse)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	userResponse = strings.ToUpper(userResponse)
-
-	switch {
-	case userResponse == "Y":
-		fmt.Println("Please, enter the score of others 5 players to compare with your result:")
-
-		for i := 0; i < 5; i++ {
-			var playersScore int
-			_, err := fmt.Scan(&playersScore)
-
-			if err != nil {
-				fmt.Println("Please, enter a correct score: A number to 0 until 5.")
-				i--
-			} else {
-				GameScores.AppendScore(playersScore)
-			}
-
-		}
-	case userResponse == "N":
-		return
-
-	default:
-		fmt.Println("Please, enter a correct option.")
-		compareUserPerformance(userScore)
-		return
-	}
-
-	userAverage := CalculateUserAverage(GameScores.scores, userScore)
-
-	// This block print the result, if CalculareUserAverage return "0" the score is below to the average:
-	if userAverage != 0 {
-		fmt.Printf("You scored higher than %d%s of all quizzers!", userAverage, "%")
 	} else {
-		fmt.Println("Your score is below average, try again!")
+
+		// This block print the result, if CalculareUserAverage return "0" the score is below to the average:
+		userAverage := CalculateUserAverage(scores, userScore)
+		if userAverage != 0 {
+			return "You scored higher than" + string(rune(userAverage)) + "%" + "of all quizzers!"
+
+		} else {
+			return "Your score is below average, try again!"
+		}
 	}
 }
