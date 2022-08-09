@@ -113,6 +113,7 @@ func QuestionIteration(q *QuestionsList) (UserPerformance, error) {
 }
 
 func CalculateUserAverage(quizzersScore []int, userScore int) int {
+	var userAverage int
 	totalScore := userScore
 	quizzers := 1
 	quizzersHighterAverage := 0
@@ -131,7 +132,12 @@ func CalculateUserAverage(quizzersScore []int, userScore int) int {
 				quizzersHighterAverage++
 			}
 		}
-		userAverage := 100 / (quizzersHighterAverage + 1/quizzers)
+
+		if quizzersHighterAverage != 0 {
+			userAverage = 100 / (quizzersHighterAverage + 1/quizzers)
+		} else {
+			userAverage = 100
+		}
 		return userAverage
 	} else {
 		// The result 0 will be used to return a text response indicating that it does not exceed the average.
@@ -181,18 +187,25 @@ func StartGame() int {
 // Compare the result of the user with to the players and print the percentile of that:
 func CompareUserPerformance(userScore int, scores []int) string {
 
-	if userScore == 0 {
+	switch {
+
+	case userScore == 0:
 		return "Your score is below average, try again!"
 
-	} else {
+	case len(scores) == 0:
+		return "You are the first quizzer! Share the game or play again to compare your performance."
+
+	default:
 
 		// This block print the result, if CalculareUserAverage return "0" the score is below to the average:
 		userAverage := CalculateUserAverage(scores, userScore)
+
 		if userAverage != 0 {
-			return "You scored higher than" + string(rune(userAverage)) + "%" + "of all quizzers!"
+			return fmt.Sprintf("You scored higher than %d%s of all quizzers!", userAverage, "%")
 
 		} else {
 			return "Your score is below average, try again!"
 		}
 	}
+
 }

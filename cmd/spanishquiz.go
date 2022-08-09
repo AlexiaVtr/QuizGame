@@ -35,6 +35,7 @@ var (
 				userScore = StartGame()
 				fmt.Println(CompareUserPerformance(userScore, GameScores.scores))
 				GameScores.scores = append(GameScores.scores, userScore)
+				fmt.Println("Desde Game:", GameScores.scores)
 
 			}
 
