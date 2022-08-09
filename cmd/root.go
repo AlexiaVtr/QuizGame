@@ -7,8 +7,7 @@ import (
 )
 
 var (
-	cacheKeys = cache.Keys()
-	rootCmd   = &cobra.Command{
+	rootCmd = &cobra.Command{
 		Use:   "go_quiz",
 		Short: "Question and answer game.",
 		Long: `
