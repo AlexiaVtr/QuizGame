@@ -38,7 +38,7 @@ var (
 				ShowUserPerformance(&userPerformance)
 
 				fmt.Println("\n" + CompareUserPerformance(userScore, GameScores.scores))
-				GameScores.scores = append(GameScores.scores, userScore)
+				GameScores.AppendScore(userScore)
 
 				if err != nil {
 					fmt.Println(err)
