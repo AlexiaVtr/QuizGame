@@ -42,10 +42,6 @@ func (gs *GameScore) AppendScore(userScore int) {
 	gs.scores = append(gs.scores, userScore)
 }
 
-func (up *UserPerformance) AppendUserAnswers(ua UserAnswer) {
-	up.answers = append(up.answers, ua)
-}
-
 func (q *Question) CalculateUserScore(userResponse int) int {
 	if q.options[userResponse-1].value == true {
 		return 1
@@ -72,9 +68,13 @@ func (q *Question) ToShow(questionNumber int) {
 }
 
 func ControlScanOptions(userResponse int) int {
+
 	for userResponse > 3 || userResponse < 1 {
 		fmt.Scan(&userResponse)
-		fmt.Println("\nPlease, select a correct option")
+
+		if userResponse > 3 || userResponse < 1 {
+			fmt.Println("\nPlease, select a correct option")
+		}
 	}
 	return userResponse
 }
@@ -167,21 +167,6 @@ Your results are:
 
 Your total score is: %d
 	`, up.score)
-}
-
-// Start the game and return the score of the quizer:
-func StartGame() int {
-	fmt.Println("...")
-
-	quizerPerformance, err := QuestionIteration(&Questions)
-	quizerscore := quizerPerformance.score
-
-	ShowUserPerformance(&quizerPerformance)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-	return quizerscore
 }
 
 // Compare the result of the user with to the players and print the percentile of that:

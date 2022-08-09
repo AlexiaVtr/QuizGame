@@ -7,7 +7,6 @@ import (
 )
 
 var (
-	user                    string
 	userScore               int
 	quizzersLimitPerSession = 5
 
@@ -32,10 +31,18 @@ var (
 
 			for i := 0; i < quizzersLimitPerSession; i++ {
 
-				userScore = StartGame()
-				fmt.Println(CompareUserPerformance(userScore, GameScores.scores))
+				fmt.Println(".\n.\n.")
+
+				userPerformance, err := QuestionIteration(&Questions)
+				userScore = userPerformance.score
+				ShowUserPerformance(&userPerformance)
+
+				fmt.Println("\n" + CompareUserPerformance(userScore, GameScores.scores))
 				GameScores.scores = append(GameScores.scores, userScore)
-				fmt.Println("Desde Game:", GameScores.scores)
+
+				if err != nil {
+					fmt.Println(err)
+				}
 
 			}
 
